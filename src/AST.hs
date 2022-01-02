@@ -7,11 +7,12 @@ type Name = Text
 data Expr
   = Literal Literal
   | Var Name
+  | Call Name [Expr]
   | UnaryOp Name Expr
   | BinaryOp Name Expr Expr
   | Function Name [Expr] Expr
   deriving (Show)
-  
+
 data Literal
   = Int Integer
   | Float Double

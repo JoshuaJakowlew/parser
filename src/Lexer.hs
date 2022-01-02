@@ -31,4 +31,5 @@ float = lexeme L.float
 identifier :: Parser T.Text
 identifier = lexeme $ T.pack <$> str
   where
-    str = (:) <$> lowerChar <*> many alphaNumChar
+    str = (:) <$> lowerChar
+              <*> many alphaNumChar

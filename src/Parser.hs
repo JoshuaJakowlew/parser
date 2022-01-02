@@ -30,11 +30,26 @@ integer = Literal . Int <$> L.integer
 float :: Parser Expr
 float = Literal . Float <$> L.float
 
+var :: Parser Expr
+var = Var <$> L.identifier
+
+call :: Parser Expr
+call = Call <$> L.identifier
+            <*> L.parens (many expr)
+
+function :: Parser Expr
+function = Function <$> L.identifier
+                    <*> L.parens (many var)
+                    <*> (L.symbol "=" *> expr)
+
 expr :: Parser Expr
 expr = Expr.makeExprParser term table
 
 term :: Parser Expr
 term =  try float
     <|> try integer
+    <|> try function
+    <|> try call
+    <|> try var
     <|> L.parens expr
 
